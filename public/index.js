@@ -1,4 +1,13 @@
 
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/service-worker.js')
+      .then((reg) => {
+        console.log('Service worker registered.', reg);
+      });
+  });
+}
+
 
 let transactions = [];
 let myChart;
@@ -80,6 +89,7 @@ function populateChart() {
   });
 }
 
+
 function sendTransaction(isAdding) {
   let nameEl = document.querySelector("#t-name");
   let amountEl = document.querySelector("#t-amount");
@@ -137,9 +147,10 @@ function sendTransaction(isAdding) {
     }
   })
   .catch(err => {
+
     // fetch failed, so save in indexed db
-    //saveRecord(transaction);
-    //Just save the record here
+    saveRecord(transaction);
+    // Just save the record here
 
     // clear form
     nameEl.value = "";
